@@ -1,2 +1,7 @@
-package com.rolling.domain.board;public interface BoardRepository {
+package com.rolling.domain.board;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface BoardRepository extends JpaRepository<Board, Integer> {
+
 }
