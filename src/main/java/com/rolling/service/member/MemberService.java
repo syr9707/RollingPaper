@@ -3,6 +3,7 @@ package com.rolling.service.member;
 import com.rolling.config.SecurityUtil;
 import com.rolling.domain.member.Member;
 import com.rolling.domain.member.MemberRepository;
+import com.rolling.web.dto.member.MemberResponseDto;
 import com.rolling.web.dto.member.MemberSaveRequestDto;
 import com.rolling.web.dto.member.MemberUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,9 @@ public class MemberService {
         }
     }
 
+    /**
+     * 회원 정보 수정
+     * */
     @Transactional
     public Long update(Long memberId, MemberUpdateRequestDto memberUpdateRequestDto) {
         Member member = memberRepository.findById(memberId).orElseThrow(
@@ -46,6 +50,30 @@ public class MemberService {
         member.updateNickname(memberUpdateRequestDto.getNickname());
 
         return memberId;
+    }
+
+    /**
+     * 회원 정보 불러오기
+     * */
+    @Transactional(readOnly = true)
+    public MemberResponseDto findById(Long memberId) {
+        Member entity = memberRepository.findById(memberId).orElseThrow(
+                () -> new IllegalArgumentException("해당 회원이 없습니다. memberId = " + memberId)
+        );
+
+        return new MemberResponseDto(entity);
+    }
+
+    /**
+     * 회원 정보 삭제
+     * */
+    @Transactional
+    public void delete (Long memberId) {
+        Member member = memberRepository.findById(memberId).orElseThrow(
+                () -> new IllegalArgumentException("해당 회원이 없습니다. memberId = " + memberId)
+        );
+
+        memberRepository.delete(member);
     }
 
 }
