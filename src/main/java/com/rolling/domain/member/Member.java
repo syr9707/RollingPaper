@@ -42,7 +42,7 @@ public class Member extends BaseTimeEntity {
         this.password = password;
         this.email = email;
         this.nickname = nickname;
-        this.role = role;
+        this.role = Role.ADMIN;
     }
 
     public void updatePassword(PasswordEncoder passwordEncoder, String password) {
