@@ -11,13 +11,18 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Board {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) // DB PK 생성 전략 그대로
+    @Id
+    @Column(name = "board_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // DB PK 생성 전략 그대로
     Integer boardId;
-    @Column(nullable = false)
+
+    @Column(name = "member_id", nullable = false)
     String memberId;
-    @Column(nullable = false)
+
+    @Column(name = "board_title", nullable = false)
     String boardTitle;
-    @Column(nullable = false)
+
+    @Column(name = "board_content", nullable = false)
     String boardContent;
 
     @Builder
