@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -16,8 +13,11 @@ import javax.persistence.Id;
 public class Board {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) // DB PK 생성 전략 그대로
     Integer boardId;
+    @Column(nullable = false)
     String memberId;
+    @Column(nullable = false)
     String boardTitle;
+    @Column(nullable = false)
     String boardContent;
 
     @Builder
