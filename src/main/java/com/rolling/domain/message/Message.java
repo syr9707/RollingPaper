@@ -1,48 +1,50 @@
 package com.rolling.domain.message;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.rolling.domain.BaseTimeEntity;
+import com.rolling.domain.board.Board;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="message")
-public class Message {
+public class Message extends BaseTimeEntity {
     @Id
-    @Column(name = "messageId")
+    @Column(name = "message_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer messageId;
+    private Long id;
 
-    @Column(name = "board_id",nullable = false)
-    Integer boardId;
+    @JsonIgnore
+    @ManyToOne (fetch = FetchType.LAZY)
+    @JoinColumn(name = "board_id")
+    private Board board_id;
 
     @Column(name = "writer", nullable = false, length = 100)
-    String writer;
+    private String writer;
 
-    @Column(name = "message_contents", nullable = false, length = 500)
-    String messageContents;
+    @Column(name = "message_Title", nullable = false, length = 200)
+    private String messageTitle;
+
+    @Column(name = "message_content", nullable = false, length = 1000)
+    private String messageContents;
 
     @Column(name = "message_state", nullable = false)
     @Enumerated(EnumType.STRING)
     private MessageState messageState;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="reg_date", nullable=false)
-    private Date regDate;
-
     @Builder
-    public Message(Integer id, Integer boardId, String writer, String messageContents) {
-        this.messageId = id;
-        this.boardId = boardId;
+    public Message(Long id, Board board, String writer, String messageTitle, String messageContents, MessageState messageState) {
+        this.id = id;
+        this.board_id = board;
         this.writer = writer;
+        this.messageTitle = messageTitle;
         this.messageContents = messageContents;
-        this.messageState = MessageState.OPEN;
+        this.messageState = messageState;
     }
-
-
 }
