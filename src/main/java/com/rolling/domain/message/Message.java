@@ -47,4 +47,14 @@ public class Message extends BaseTimeEntity {
         this.messageContents = messageContents;
         this.messageState = messageState;
     }
+
+    public void setBoard(Board board) {
+         this.board_id = board;
+         board_id.getMessageList().add(this);
+    }
+
+    public void modify(Message message) {
+        this.messageTitle = message.messageTitle;
+        this.messageContents = message.messageContents;
+    }
 }
