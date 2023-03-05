@@ -14,6 +14,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@Table(name = "board")
 public class Board {
     @Id
     @Column(name = "board_id")
@@ -33,7 +34,7 @@ public class Board {
     @Column(name = "board_content", nullable = false)
     private String boardContent;
 
-    @OneToMany (mappedBy = "board_id")
+    @OneToMany (mappedBy = "board_id", cascade = CascadeType.ALL)
     private List<Message> messageList = new ArrayList<>();
 
     @Builder

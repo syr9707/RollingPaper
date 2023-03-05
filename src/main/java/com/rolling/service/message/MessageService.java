@@ -29,6 +29,12 @@ public class MessageService {
     /**
      * 메시지 검색하기
      * */
+    public List<Message> getMessageSerchList(String str) {
+        return messageRepository.findAll().stream()
+                .filter(e -> e.getMessageState()==MessageState.OPEN)
+                .filter(e -> e.getMessageTitle().contains(str) || e.getMessageContents().contains(str))
+                .collect(Collectors.toList());
+    }
 
     /**
      * 메시지 작성하기
@@ -43,7 +49,7 @@ public class MessageService {
      * 메시지 수정하기
      * */
     public long updateMessage(long messageId, Message message) {
-        Optional<Message> byId = messageRepository.findById((int) messageId);
+        Optional<Message> byId = messageRepository.findById(messageId);
         if (!byId.isEmpty()) {
             byId.get().modify(message);
             return byId.get().getId();
