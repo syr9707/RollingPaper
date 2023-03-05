@@ -26,7 +26,7 @@ class BoardTest {
 
         boardRepository.save(params);
 
-        Board entity = boardRepository.findById(1).get();
+        Board entity = boardRepository.findById(1L).get();
         assertThat(entity.getBoardTitle()).isEqualTo("1번 테스트");
     }
 
@@ -38,7 +38,7 @@ class BoardTest {
 
     @Test @Order(3)
     void delete() {
-        Board entity = boardRepository.findById(1).get();
+        Board entity = boardRepository.findById(1L).get();
         boardRepository.delete(entity);
     }
 }
