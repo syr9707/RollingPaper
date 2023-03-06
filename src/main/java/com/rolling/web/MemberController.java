@@ -4,6 +4,7 @@ import com.rolling.domain.member.Member;
 import com.rolling.domain.member.MemberRepository;
 import com.rolling.service.member.MemberService;
 import com.rolling.web.dto.member.MemberSaveRequestDto;
+import com.rolling.web.dto.member.MemberUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -50,6 +51,19 @@ public class MemberController {
         }
 
         return memberService.saveMember(memberSaveRequestDto);
+    }
+    
+    @PutMapping("/member/{memberId}")
+    public @ResponseBody Long update(@PathVariable("memberId") long memberId, @RequestBody MemberUpdateRequestDto memberUpdateRequestDto) {
+
+        return memberService.update(memberId, memberUpdateRequestDto);
+    }
+
+    @DeleteMapping("/member/{memberId}")
+    public @ResponseBody Long delete(@PathVariable("memberId") long memberId) {
+        memberService.delete(memberId);
+
+        return memberId;
     }
 
 }
