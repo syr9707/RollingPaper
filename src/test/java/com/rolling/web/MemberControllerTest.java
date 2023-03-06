@@ -21,9 +21,11 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -99,6 +101,10 @@ class MemberControllerTest {
                         .content(objectMapper.writeValueAsString(input)))
                 .andExpect(status().isOk())
                 .andDo(print());
+
+        // then
+        List<Member> all = memberRepository.findAll();
+        assertThat(all.get(0).getNickname()).isEqualTo(updateNickname);
     }
     
     @Test
