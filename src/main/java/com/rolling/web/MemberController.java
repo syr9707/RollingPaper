@@ -3,6 +3,7 @@ package com.rolling.web;
 import com.rolling.domain.member.Member;
 import com.rolling.domain.member.MemberRepository;
 import com.rolling.service.member.MemberService;
+import com.rolling.web.dto.member.MemberResponseDto;
 import com.rolling.web.dto.member.MemberSaveRequestDto;
 import com.rolling.web.dto.member.MemberUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -64,6 +65,12 @@ public class MemberController {
         memberService.delete(memberId);
 
         return memberId;
+    }
+
+    @GetMapping("/member/{memberId}")
+    public MemberResponseDto findById(@PathVariable("memberId") long memberId) {
+
+        return memberService.findById(memberId);
     }
 
 }
