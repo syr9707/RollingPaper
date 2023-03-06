@@ -117,4 +117,26 @@ class MemberControllerTest {
         Assertions.assertThat(memberRepository.findByEmail("aaa@naver.com").isEmpty());
     }
 
+    @Test
+    @WithMockUser(roles = "USER")
+    public void 회원정보_수정_성공_비밀번호변경() throws Exception {
+        String updatePassword = "1234567777777";
+
+        Member member = memberRepository.findByEmail("aaa@naver.com").orElseThrow(
+                () -> new IllegalArgumentException("회원이 존재하지 않습니다.")
+        );
+
+        String memberId = String.valueOf(member.getId());
+
+        Map<String, String> input = new HashMap<>();
+        input.put("password", updatePassword);
+        input.put("nickname", "ummchicken");
+
+        mockMvc.perform(put("/member/" + memberId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(input)))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
 }

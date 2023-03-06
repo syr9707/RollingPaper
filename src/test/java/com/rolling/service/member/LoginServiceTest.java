@@ -73,7 +73,7 @@ class LoginServiceTest {
         mockMvc.perform(formLogin().userParameter("email")
                         .loginProcessingUrl("/login")
                         .user(email).password(password))
-                .andExpect(SecurityMockMvcResultMatchers.authenticated()); // 로그인이 성공해 인즈되었다면, 테스트코드가 통과한다.
+                .andExpect(SecurityMockMvcResultMatchers.authenticated()); // 로그인이 성공해 인증되었다면, 테스트코드가 통과한다.
     }
 
     @Test
